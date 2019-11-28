@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:23:29 by badrien           #+#    #+#             */
-/*   Updated: 2019/11/27 17:31:39 by badrien          ###   ########.fr       */
+/*   Updated: 2019/11/28 14:51:15 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_flag reset_flag(t_flag flag)
 	return (flag);
 }
 
-t_flag make_flag(char *str, va_list ap, t_flag flag) //%d %.1d %1d %-d
+t_flag make_flag(const char *str, va_list ap, t_flag flag) //%d %.1d %1d %-d
 {
 	int i;
 

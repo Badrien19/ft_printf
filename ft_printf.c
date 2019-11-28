@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 11:23:28 by badrien           #+#    #+#             */
-/*   Updated: 2019/11/27 16:40:44 by badrien          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:01:57 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@
 **
 **
 ** TO DO: 
-** mise en place d'une struc flag
-** focntion qui imitialise les flags a 0
-** fonction qui remplie les flag
+** mise en place d'une struc flag OK
+** focntion qui imitialise les flags a 0 OK
+** fonction qui remplie les flag OK
+** verification des potentiel frag
 ** faire un par un ajouter les convertion avec flags
 */
 
@@ -59,13 +60,19 @@ int	ft_printf(const char *template, ...)
 		}
 		if(template[i] == '%')
 		{
+			flag = reset_flag(flag);
+			flag = make_flag(&template[i], ap, flag); // je rempli la structure
+			/*
+			printf("Flag:\n");
+			printf("flag.type     : %c\n", flag.type);
+			printf("flag.precision: %d\n", flag.precison);
+			printf("flag.before   : %d\n", flag.before);
+			printf("flag.after    : %d\n", flag.after);
+			*/
+			chaine = get_conversion(ap, chaine, flag);
+			while (is_conversion(template[++i]) == 0);
 			i++;
-			
-			flag = make_flag(template[i], ap, flag)
-			//while(template[i] == '*' && template[i] != '\0') // ici je dois remplir la structure
-			//	i++;
-			chaine = get_conversion(ap, chaine, template[i]);
-			i++;
+			//i = i + 2; // JE DOIS AVANCER j'usqu'a la lettre de conversion
 		}
 	}
 	write(1, chaine, ft_strlen(chaine));
@@ -90,23 +97,23 @@ char *get_text(const char *next)
 	return (s);
 }
 
-char *get_conversion(va_list ap, char *chaine, char conversion)
+char *get_conversion(va_list ap, char *chaine, t_flag flag)
 {
-	if(conversion == 'c')
+	if(flag.type == 'c')
 		chaine = ft_strjoin(chaine, convert_c(ap));
-	if(conversion == 's')
+	if(flag.type == 's')
 		chaine = ft_strjoin(chaine, convert_s(ap));
-	if(conversion == 'p')
+	if(flag.type == 'p')
 		chaine = ft_strjoin(chaine, convert_p(ap));
-	if(conversion == 'd' || conversion == 'i')
+	if(flag.type == 'd' || flag.type == 'i')
 		chaine = ft_strjoin(chaine, convert_di(ap));
-	if(conversion == 'u')
+	if(flag.type == 'u')
 		chaine = ft_strjoin(chaine, convert_u(ap));
-	if(conversion == 'X')
+	if(flag.type == 'X')
 		chaine = ft_strjoin(chaine, convert_xx(ap, 0));
-	if(conversion == 'x')
+	if(flag.type == 'x')
 		chaine = ft_strjoin(chaine, convert_xx(ap, 1));
-	if(conversion == '%')
+	if(flag.type == '%')
 		chaine = ft_strjoin(chaine, convert_pourcent());
 	return (chaine);
 }

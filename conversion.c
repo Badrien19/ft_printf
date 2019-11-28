@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:37:33 by badrien           #+#    #+#             */
-/*   Updated: 2019/11/27 16:16:12 by badrien          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:02:42 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char *convert_s(va_list ap) // .(nb) le nb de caractre || - nb espace apres || n
 {
 	char *temp;
 	int i;
-	char *s; // faut faire un malloc sinon la variable n'existe plus en sortie
+	char *s;
 
 	temp = va_arg(ap, char*);
 	i = 0;
@@ -54,7 +54,7 @@ char *convert_p(va_list ap)
 	return (s);
 }
 
-char *convert_di(va_list ap)
+char *convert_di(va_list ap) // le . 7.5 -42 _-00042
 {
 	int i;
 	char *s;
@@ -93,6 +93,5 @@ char *convert_pourcent()
 	c = malloc(sizeof(2) * 2);
 	c[0] = '%';
 	c[1] = '\0';
-
 	return (c);
 }
