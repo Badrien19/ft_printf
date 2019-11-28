@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:23:29 by badrien           #+#    #+#             */
-/*   Updated: 2019/11/28 14:51:15 by badrien          ###   ########.fr       */
+/*   Updated: 2019/11/28 17:45:55 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 t_flag reset_flag(t_flag flag)
 {
 	flag.type = '\0';
-	flag.precison = 0;
-	flag.before = 0;
-	flag.after = 0;
-	flag.error = 0;
+	flag.precison = -1;
+	flag.before = -1;
+	flag.after = -1;
+	flag.error = -1;
 	return (flag);
 }
 

@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 11:23:28 by badrien           #+#    #+#             */
-/*   Updated: 2019/11/28 15:01:57 by badrien          ###   ########.fr       */
+/*   Updated: 2019/11/28 18:20:09 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 ** fonction qui remplie les flag OK
 ** verification des potentiel frag
 ** faire un par un ajouter les convertion avec flags
+** 	c:ok	s:ok	p:	d:	i:	u:	x:	X:	%:
 */
 
 int	ft_printf(const char *template, ...)
@@ -62,13 +63,13 @@ int	ft_printf(const char *template, ...)
 		{
 			flag = reset_flag(flag);
 			flag = make_flag(&template[i], ap, flag); // je rempli la structure
-			/*
+			
 			printf("Flag:\n");
 			printf("flag.type     : %c\n", flag.type);
 			printf("flag.precision: %d\n", flag.precison);
 			printf("flag.before   : %d\n", flag.before);
-			printf("flag.after    : %d\n", flag.after);
-			*/
+			printf("flag.after    : %d\n\n", flag.after);
+			
 			chaine = get_conversion(ap, chaine, flag);
 			while (is_conversion(template[++i]) == 0);
 			i++;
@@ -100,11 +101,11 @@ char *get_text(const char *next)
 char *get_conversion(va_list ap, char *chaine, t_flag flag)
 {
 	if(flag.type == 'c')
-		chaine = ft_strjoin(chaine, convert_c(ap));
+		chaine = ft_strjoin(chaine, convert_c(ap, flag));
 	if(flag.type == 's')
-		chaine = ft_strjoin(chaine, convert_s(ap));
+		chaine = ft_strjoin(chaine, convert_s(ap, flag));
 	if(flag.type == 'p')
-		chaine = ft_strjoin(chaine, convert_p(ap));
+		chaine = ft_strjoin(chaine, convert_p(ap, flag));
 	if(flag.type == 'd' || flag.type == 'i')
 		chaine = ft_strjoin(chaine, convert_di(ap));
 	if(flag.type == 'u')

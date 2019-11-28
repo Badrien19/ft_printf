@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 11:23:26 by badrien           #+#    #+#             */
-/*   Updated: 2019/11/28 14:19:14 by badrien          ###   ########.fr       */
+/*   Updated: 2019/11/28 18:19:47 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 typedef struct	s_list
 {
 	char type;
-	int precison;
-	int before;
-	int after;
+	int precison; // .{nbr}
+	int before; // {nbr}
+	int after; // -{nbr}
 	int error;
 }				t_flag;
 // ft_printf
@@ -35,9 +35,9 @@ char *get_text(const char *next);
 char *get_conversion(va_list ap, char *chaine, t_flag flag);
 
 // conversion.c
-char *convert_c(va_list ap);
-char *convert_s(va_list ap);
-char *convert_p(va_list ap);
+char *convert_c(va_list ap, t_flag flag);
+char *convert_s(va_list ap, t_flag flag);
+char *convert_p(va_list ap, t_flag flag);
 char *convert_di(va_list ap);
 char *convert_u(va_list ap);
 char *convert_xx(va_list ap, int o);
@@ -51,6 +51,9 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 char	*get_adress(char *pt, int i);
 char	*get_hexa(int nbr, int i);
 char	*get_unsigned_int(unsigned int nb);
+char *ft_strndup(char *s, int size);
+char *add_space_back(char *s, int size);
+char *add_space_before(char *s, int size);
 
 // printf_utils
 size_t	ft_strlen(const char *chaine);

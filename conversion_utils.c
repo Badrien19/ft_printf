@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 09:37:39 by badrien           #+#    #+#             */
-/*   Updated: 2019/11/27 15:21:17 by badrien          ###   ########.fr       */
+/*   Updated: 2019/11/28 18:19:05 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char *get_adress(char *pt, int i)
 	ft_memcpy(s, "0x000000000000\0", 15);
 	i = 13;
 	nbr = (long long int)pt;
-	while(i > 2)
+	while(i > 1)
 	{
 		s[i] = hexa[(nbr % 16)];
 		nbr = nbr / 16;
@@ -137,7 +137,7 @@ char *get_hexa(int nbr, int i)
 	return(s);
 }
 
-char *get_unsigned_int(unsigned int nb) // TO DO
+char *get_unsigned_int(unsigned int nb)
 {
 	unsigned int n;
 	int i;
@@ -162,4 +162,78 @@ char *get_unsigned_int(unsigned int nb) // TO DO
 		i--;
 	}
 	return (number);
+}
+
+char *ft_strndup(char *s, int size)
+{
+	char *new;
+	int i;
+
+	i = 0;
+	if(size < 0)
+		return (NULL);
+	new = malloc(sizeof(char) *  size + 1);
+
+	while(i < size)
+	{
+		new[i] = s[i];
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
+}
+
+char *add_space_back(char *s, int size)
+{
+	char *new;
+	int i;
+
+	i = 0;
+	if(size < 0)
+		return (NULL);
+	new = malloc(sizeof(char) *  size + 1);
+
+	while(i < size && s[i] != '\0')
+	{
+		new[i] = s[i];
+		i++;
+	}
+	while(i < size)
+	{
+		new[i] = ' ';
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
+}
+
+char *add_space_before(char *s, int size)
+{
+		char *new;
+	int i;
+	int y;
+
+	i = 0;
+	if(size < 0)
+		return (NULL);
+	new = malloc(sizeof(char) *  size + 1);
+
+	while(s[i] != '\0')
+		i++;
+	y = size - i;
+	i = 0;
+	while(y)
+	{
+		new[i] = ' ';
+		y--;
+		i++;
+	}
+	while(s[y] != '\0')
+	{
+		new[i] = s[y];
+		y++;
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
 }
