@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 13:48:59 by badrien           #+#    #+#             */
-/*   Updated: 2019/11/28 18:22:33 by badrien          ###   ########.fr       */
+/*   Updated: 2019/12/10 11:15:24 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,14 @@
 int main()
 {
 	int i;
-	char *oui = "Cette phrase est un test";
+	char *oui = "%0100d";
 	i = -1;
-	//t_flag flag;
-	//va_list ap;
+	t_flag flag;
+	va_list ap;
 	
 	
-	ft_printf("<%-1p>\n",&oui); // nb et - 
-	printf("<%-1p>\n",&oui);
-	
-	
-	
-	
+	ft_printf("<%015.10d>\n", 4321); // - nb flag 0
+	printf("<%015.10d>\n", 4321);
 	/*
 	flag = reset_flag(flag);
 	flag = make_flag(oui, ap, flag);
@@ -36,17 +32,18 @@ int main()
 	printf("flag.precision: %d\n", flag.precison);
 	printf("flag.before: %d\n", flag.before);
 	printf("flag.after: %d\n", flag.after);
+	printf("flag.zero %d\n", flag.zero);
 	*/
 	/*
 	ft_printf("s1= <%s>\ns2= <%s> \ns3= <%s>\n", oui, oui2, oui3);
 	printf("s1= <%s>\ns2= <%s> \ns3= <%s>\n", oui, oui2, oui3);
 	*/
 	/*
-	ft_printf("ceci est un caractere: <%c>\n", 'A');
-	printf("ceci est un caractere: <%c>\n", 'A');
+	ft_printf("ceci est un caractere: <%20c>\n", 'A');
+	printf("ceci est un caractere: <%20c>\n", 'A');
 
-	ft_printf("ceci est un pointeur: <%p>\n", &oui);
-	printf("ceci est un pointeur: <%p>\n", &oui);
+	ft_printf("ceci est un pointeur: <%20p>\n", &oui);
+	printf("ceci est un pointeur: <%20p>\n", &oui);
 
 	ft_printf("ceci est un int: <%d>\n", i);
 	printf("ceci est un int: <%d>\n", i);

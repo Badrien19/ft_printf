@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 09:37:39 by badrien           #+#    #+#             */
-/*   Updated: 2019/11/28 18:19:05 by badrien          ###   ########.fr       */
+/*   Updated: 2019/12/10 11:14:49 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ char *ft_strndup(char *s, int size)
 	return (new);
 }
 
-char *add_space_back(char *s, int size)
+char *add_space_back(char *s, int size, char c)
 {
 	char *new;
 	int i;
@@ -200,16 +200,16 @@ char *add_space_back(char *s, int size)
 	}
 	while(i < size)
 	{
-		new[i] = ' ';
+		new[i] = c;
 		i++;
 	}
 	new[i] = '\0';
 	return (new);
 }
 
-char *add_space_before(char *s, int size)
+char *add_space_before(char *s, int size, char c)
 {
-		char *new;
+	char *new;
 	int i;
 	int y;
 
@@ -224,7 +224,7 @@ char *add_space_before(char *s, int size)
 	i = 0;
 	while(y)
 	{
-		new[i] = ' ';
+		new[i] = c;
 		y--;
 		i++;
 	}
@@ -236,4 +236,70 @@ char *add_space_before(char *s, int size)
 	}
 	new[i] = '\0';
 	return (new);
+}
+
+char *add_zero_front(char *s, int size)
+{
+	char *new;
+	int signe;
+	int i;
+	int y;
+
+	i = 0;
+	signe = 0;
+	if(size < 0)
+		return (NULL);
+	if(s[i] == '-')
+		signe++;
+	new = malloc(sizeof(char) *  size + 1 + signe);
+	while(s[i] != '\0')
+		i++;
+	new[size] = '\0';
+	while(i)
+	{
+		if(s[i - 1 ] == '-')
+			break;
+		new[size - 1 + signe] = s[i - 1];
+		size--;
+		i--;
+	}
+	while (size + signe > 0)
+	{
+		new[size - 1 + signe] = '0';
+		size--;
+	}
+	if(s[0] == '-')
+		new[0] = '-';
+	return(new);
+}
+
+char *add_zero_front_zero(char *s, int size)
+{
+	char *new;
+	int i;
+	int y;
+
+	i = 0;
+	if(size < 0)
+		return (NULL);
+	new = malloc(sizeof(char) *  size + 1);
+	while(s[i] != '\0')
+		i++;
+	new[size] = '\0';
+	while(i)
+	{
+		if(s[i - 1 ] == '-')
+			break;
+		new[size - 1] = s[i - 1];
+		size--;
+		i--;
+	}
+	while (size > 0)
+	{
+		new[size - 1] = '0';
+		size--;
+	}
+	if(s[0] == '-')
+		new[0] = '-';
+	return(new);
 }

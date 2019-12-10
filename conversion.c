@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:37:33 by badrien           #+#    #+#             */
-/*   Updated: 2019/11/28 18:21:55 by badrien          ###   ########.fr       */
+/*   Updated: 2019/12/10 11:17:57 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char *convert_c(va_list ap, t_flag flag) // OK
 	c = malloc(sizeof(2) * 2);
 	c[0] = va_arg(ap, int);
 	c[1] = '\0';
-	if(flag.after > ft_strlen(c) && flag.after != -1) // le -
-		c= add_space_back(c, flag.after);
-	if(flag.before > ft_strlen(c) && flag.before != -1) // le nombre
-		c= add_space_before(c, flag.before);
+	if(flag.after > (int)ft_strlen(c) && flag.after != -1) // le -
+		c= add_space_back(c, flag.after, ' ');
+	if(flag.before > (int)ft_strlen(c) && flag.before != -1) // le nombre
+		c= add_space_before(c, flag.before, ' ');
 	return (c);
 }
 
@@ -47,10 +47,10 @@ char *convert_s(va_list ap, t_flag flag) // OK
 	}
 	if(flag.precison < (int)ft_strlen(s) && flag.precison != -1) // le .
 		s = ft_strndup(s, flag.precison);
-	if(flag.after > ft_strlen(s) && flag.after != -1) // le -
-		s= add_space_back(s, flag.after);
-	if(flag.before > ft_strlen(s) && flag.before != -1) // le nombre
-		s= add_space_before(s, flag.before);
+	if(flag.after > (int)ft_strlen(s) && flag.after != -1) // le -
+		s= add_space_back(s, flag.after, ' ');
+	if(flag.before > (int)ft_strlen(s) && flag.before != -1) // le nombre
+		s= add_space_before(s, flag.before, ' ');
 	return (s);
 }
 
@@ -63,26 +63,41 @@ char *convert_p(va_list ap, t_flag flag) // OK
 
 	s = get_adress(adress, 1);
 
-	if(flag.after > ft_strlen(s) && flag.after != -1) // le -
-		s= add_space_back(s, flag.after);
-	if(flag.before > ft_strlen(s) && flag.before != -1) // le nombre
-		s= add_space_before(s, flag.before);
+	if(flag.after > (int)ft_strlen(s) && flag.after != -1) // le -
+		s= add_space_back(s, flag.after, ' ');
+	if(flag.before > (int)ft_strlen(s) && flag.before != -1) // le nombre
+		s= add_space_before(s, flag.before, ' ');
 
 	return (s);
 }
 
-char *convert_di(va_list ap) // le . 7.5 -42 _-00042
-{
+char *convert_di(va_list ap, t_flag flag) // le . 7.5 -42 _-00042
+{ // avec . le - compte pas, avec le 0 le zero compte
 	int i;
 	char *s;
 
 	i = va_arg(ap, int);
 	s = get_int(i);
+	
+	(i < 0) ? (i = 1) : (i = 0); 
+	printf("precision = %d && nbr de chiffre = %d\n", flag.precison, (int)ft_strlen(s) - i);
+	// on applique d'abord la precision (on s'en fou du moins) -> retirer 1 si nombre negatif
+	if(flag.precison != -1 && flag.precison > (int)ft_strlen(s) - i)
+		s = add_zero_front(s, flag.precison);
+	if(flag.zero != -1 && flag.zero > (int)ft_strlen(s) && flag.precison == -1)
+		s = add_zero_front_zero(s, flag.zero);
+	if(flag.zero != -1 && flag.zero > (int)ft_strlen(s) && flag.precison != -1)
+		s = add_space_before(s, flag.zero, ' ');
+	if(flag.before != -1 && flag.before > (int)ft_strlen(s))
+		s= add_space_before(s, flag.before, ' ');
+	if(flag.after > (int)ft_strlen(s) && flag.after != -1)
+		s= add_space_back(s, flag.after, ' ');
+	// si champ minimal < precision on ignore le champ minimal
 
 	return (s);
 }
 
-char *convert_u(va_list ap) // to do get_unsigned_int
+char *convert_u(va_list ap)
 {
 	unsigned int i;
 	char *s;
