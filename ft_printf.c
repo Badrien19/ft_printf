@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 11:23:28 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/09 19:08:40 by badrien          ###   ########.fr       */
+/*   Updated: 2019/12/10 14:22:08 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,12 @@ char *get_conversion(va_list ap, char *chaine, t_flag flag)
 	if(flag.type == 'd' || flag.type == 'i')
 		chaine = ft_strjoin(chaine, convert_di(ap, flag));
 	if(flag.type == 'u')
-		chaine = ft_strjoin(chaine, convert_u(ap));
+		chaine = ft_strjoin(chaine, convert_u(ap, flag));
 	if(flag.type == 'X')
-		chaine = ft_strjoin(chaine, convert_xx(ap, 0));
+		chaine = ft_strjoin(chaine, convert_xx(ap, 0, flag));
 	if(flag.type == 'x')
-		chaine = ft_strjoin(chaine, convert_xx(ap, 1));
+		chaine = ft_strjoin(chaine, convert_xx(ap, 1, flag));
 	if(flag.type == '%')
-		chaine = ft_strjoin(chaine, convert_pourcent());
+		chaine = ft_strjoin(chaine, convert_pourcent(flag));
 	return (chaine);
 }

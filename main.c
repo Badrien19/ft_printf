@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 13:48:59 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/10 11:15:24 by badrien          ###   ########.fr       */
+/*   Updated: 2019/12/10 14:51:01 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int main()
 	va_list ap;
 	
 	
-	ft_printf("<%015.10d>\n", 4321); // - nb flag 0
-	printf("<%015.10d>\n", 4321);
+	ft_printf("%.6i\n", -3); // - nb flag 0
+	printf("%.6i\n", -3); // nb -nb 0 .
 	/*
 	flag = reset_flag(flag);
 	flag = make_flag(oui, ap, flag);

@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 09:37:39 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/10 11:14:49 by badrien          ###   ########.fr       */
+/*   Updated: 2019/12/10 14:46:57 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,6 @@ char *add_zero_front(char *s, int size)
 	char *new;
 	int signe;
 	int i;
-	int y;
 
 	i = 0;
 	signe = 0;
@@ -251,7 +250,7 @@ char *add_zero_front(char *s, int size)
 		return (NULL);
 	if(s[i] == '-')
 		signe++;
-	new = malloc(sizeof(char) *  size + 1 + signe);
+	new = malloc(sizeof(char) *  size + signe);
 	while(s[i] != '\0')
 		i++;
 	new[size] = '\0';
@@ -277,7 +276,6 @@ char *add_zero_front_zero(char *s, int size)
 {
 	char *new;
 	int i;
-	int y;
 
 	i = 0;
 	if(size < 0)

@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 11:23:26 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/10 11:11:18 by badrien          ###   ########.fr       */
+/*   Updated: 2019/12/10 14:22:58 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ char 	*convert_c(va_list ap, t_flag flag);
 char 	*convert_s(va_list ap, t_flag flag);
 char 	*convert_p(va_list ap, t_flag flag);
 char 	*convert_di(va_list ap, t_flag flag);
-char 	*convert_u(va_list ap);
-char 	*convert_xx(va_list ap, int o);
-char 	*convert_pourcent();
+char 	*convert_u(va_list ap, t_flag flag);
+char 	*convert_xx(va_list ap, int o, t_flag flag);
+char 	*convert_pourcent(t_flag flag);
 
 //conversion utils.c
 char	*fill_number(int i, unsigned int nb, int signe);
@@ -52,10 +52,10 @@ char	*get_adress(char *pt, int i);
 char	*get_hexa(int nbr, int i);
 char	*get_unsigned_int(unsigned int nb);
 char 	*ft_strndup(char *s, int size);
-char 	*add_space_back(char *s, int size, char c);
+char 	*add_space_back(char *s, int size, char c); // renome en add_*_front
 char 	*add_space_before(char *s, int size, char c); // renome en add_*_front
 char	*add_zero_front(char *s, int size);
-char *add_zero_front_zero(char *s, int size);
+char	*add_zero_front_zero(char *s, int size);
 
 // printf_utils
 size_t	ft_strlen(const char *chaine);
