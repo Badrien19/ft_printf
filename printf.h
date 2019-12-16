@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 11:23:26 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/10 14:22:58 by badrien          ###   ########.fr       */
+/*   Updated: 2019/12/16 13:36:56 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ char	*fill_number(int i, unsigned int nb, int signe);
 char	*get_int(int n);
 void	*ft_memset(void *b, int c, size_t len);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
-char	*get_adress(char *pt, int i);
+char	*get_adress(unsigned long long pt);
 char	*get_hexa(int nbr, int i);
-char	*get_unsigned_int(unsigned int nb);
+char 	*get_unsigned_int(unsigned int nb);
 char 	*ft_strndup(char *s, int size);
 char 	*add_space_back(char *s, int size, char c); // renome en add_*_front
 char 	*add_space_before(char *s, int size, char c); // renome en add_*_front

@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 09:37:39 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/10 14:46:57 by badrien          ###   ########.fr       */
+/*   Updated: 2019/12/16 13:43:43 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,31 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-char *get_adress(char *pt, int i)
+char *get_adress(unsigned long long pt)
 {
-	long long int nbr;
+	unsigned long long nbr;
 	char *s;
 	char hexa[17];
-	
-	s = malloc(sizeof(char) * 15);
-	if(i == 0)
-		ft_memcpy(hexa, "0123456789ABCDEF\0", 17);
-	else
-		ft_memcpy(hexa, "0123456789abcdef\0", 17);
-	ft_memcpy(s, "0x000000000000\0", 15);
-	i = 13;
-	nbr = (long long int)pt;
-	while(i > 1)
+	int i;
+
+	i = 0;
+	nbr = pt;
+	while (nbr != 0)
 	{
-		s[i] = hexa[(nbr % 16)];
+		nbr = nbr / 16;
+		i++;
+	}
+	s = malloc(sizeof(char) * (i+3));
+	ft_memcpy(hexa, "0123456789abcdef\0", 17);
+	s[i--] = '\0';
+	s[0] = '0';
+	s[1] = 'x';
+	nbr = pt;
+	if(nbr == 0)
+		s[2] = '0';
+	while(nbr != 0)
+	{
+		s[i+2] = hexa[(nbr % 16)];
 		nbr = nbr / 16;
 		i--;
 	}
@@ -127,6 +135,8 @@ char *get_hexa(int nbr, int i)
 	}
 	s = malloc(sizeof(char) * (i + 1));
 	s[i--] = '\0';
+	if(nbr_cpy == 0)
+		s[0] = '0';
 	nbr_cpy = nbr;
 	while(nbr_cpy != 0)
 	{
@@ -150,11 +160,13 @@ char *get_unsigned_int(unsigned int nb)
 		n = n / 10;
 		i++;
 	}
+	if(nb == 0)
+		i = -1;
 	if (!(number = malloc(sizeof(char) * i + 2)))
 		return (0);
 	number[i + 1] = '\0';
-	if (nb == 0)
-		number[i] = '0';
+	if(nb == 0)
+		number[0] = '0';
 	while (nb > 0)
 	{
 		number[i] = (nb % 10) + '0';
@@ -253,7 +265,7 @@ char *add_zero_front(char *s, int size)
 	new = malloc(sizeof(char) *  size + signe);
 	while(s[i] != '\0')
 		i++;
-	new[size] = '\0';
+	new[size + signe] = '\0';
 	while(i)
 	{
 		if(s[i - 1 ] == '-')

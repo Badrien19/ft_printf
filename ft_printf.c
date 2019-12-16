@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 11:23:28 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/10 14:22:08 by badrien          ###   ########.fr       */
+/*   Updated: 2019/12/13 14:54:56 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,12 @@ int	ft_printf(const char *template, ...)
 	{
 		if(template[i] != '%')
 		{
-			chaine = ft_strjoin(chaine, get_text(&template[i]));
+			//chaine = ft_strjoin(chaine, get_text(&template[i]));
+			
+			chaine = get_text(&template[i]);
+			write(1, chaine, ft_strlen(chaine));
+			chaine = NULL;
+			
 			while (template[i] != '%' && template[i] != '\0')
 				i++;
 		}
@@ -65,20 +70,17 @@ int	ft_printf(const char *template, ...)
 		{
 			flag = reset_flag(flag);
 			flag = make_flag(&template[i], ap, flag); // je rempli la structure
-			/*
-			printf("Flag:\n");
-			printf("flag.type     : %c\n", flag.type);
-			printf("flag.precision: %d\n", flag.precison);
-			printf("flag.before   : %d\n", flag.before);
-			printf("flag.after    : %d\n\n", flag.after);
-			*/
+
 			chaine = get_conversion(ap, chaine, flag);
+			
+			write(1, chaine, ft_strlen(chaine));
+			chaine = NULL;
+
 			while (is_conversion(template[++i]) == 0);
 			i++;
-			//i = i + 2; // JE DOIS AVANCER j'usqu'a la lettre de conversion
 		}
 	}
-	write(1, chaine, ft_strlen(chaine));
+	//write(1, chaine, ft_strlen(chaine));
 	return (0);
 }
 
