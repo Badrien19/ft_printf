@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 11:23:28 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/13 14:54:56 by badrien          ###   ########.fr       */
+/*   Updated: 2019/12/17 10:10:03 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,81 +44,68 @@
 
 int	ft_printf(const char *template, ...)
 {
-	char	*chaine;
 	va_list ap;
 	t_flag flag;
 	int i;
+	int taille;
 
+	taille = 0;
 	i = 0;
-	chaine = NULL;
 	va_start(ap, template);
 
 	while(template[i] != '\0')
 	{
 		if(template[i] != '%')
 		{
-			//chaine = ft_strjoin(chaine, get_text(&template[i]));
-			
-			chaine = get_text(&template[i]);
-			write(1, chaine, ft_strlen(chaine));
-			chaine = NULL;
-			
+			taille += get_text(&template[i]);
 			while (template[i] != '%' && template[i] != '\0')
 				i++;
 		}
 		if(template[i] == '%')
 		{
 			flag = reset_flag(flag);
-			flag = make_flag(&template[i], ap, flag); // je rempli la structure
-
-			chaine = get_conversion(ap, chaine, flag);
-			
-			write(1, chaine, ft_strlen(chaine));
-			chaine = NULL;
-
+			flag = make_flag(&template[i], ap, flag);
+			taille += get_conversion(ap, flag);
 			while (is_conversion(template[++i]) == 0);
 			i++;
 		}
 	}
-	//write(1, chaine, ft_strlen(chaine));
-	return (0);
+	return (taille);
 }
 
-char *get_text(const char *next)
+int get_text(const char *next)
 {
     int i;
-    char *s;
+
     i = 0;
     while (next[i] != '%' && next[i] != '\0')
-		i++;
-    s = malloc(sizeof(char) * i + 1); // TO DO ; PROTECT 
-    i = 0;
-    while (next[i] != '%' && next[i] != '\0')
-    {
-        s[i] = next[i];
-		i++;
-    }
-    s[i] = '\0';
-	return (s);
+			i++;
+		write(1, next, i);
+    
+	return (i);
 }
 
-char *get_conversion(va_list ap, char *chaine, t_flag flag)
+int get_conversion(va_list ap, t_flag flag)
 {
+	int i;
+
+	i = 0;
 	if(flag.type == 'c')
-		chaine = ft_strjoin(chaine, convert_c(ap, flag));
+		i += putstr_len(convert_c(ap, flag));
 	if(flag.type == 's')
-		chaine = ft_strjoin(chaine, convert_s(ap, flag));
+		i += putstr_len(convert_s(ap, flag));
 	if(flag.type == 'p')
-		chaine = ft_strjoin(chaine, convert_p(ap, flag));
+		i += putstr_len(convert_p(ap, flag));
 	if(flag.type == 'd' || flag.type == 'i')
-		chaine = ft_strjoin(chaine, convert_di(ap, flag));
+		i += putstr_len(convert_di(ap, flag));
 	if(flag.type == 'u')
-		chaine = ft_strjoin(chaine, convert_u(ap, flag));
+		i += putstr_len(convert_u(ap, flag));
 	if(flag.type == 'X')
-		chaine = ft_strjoin(chaine, convert_xx(ap, 0, flag));
+		i += putstr_len(convert_xx(ap, 0, flag));
 	if(flag.type == 'x')
-		chaine = ft_strjoin(chaine, convert_xx(ap, 1, flag));
+		i += putstr_len(convert_xx(ap, 1, flag));
 	if(flag.type == '%')
-		chaine = ft_strjoin(chaine, convert_pourcent(flag));
-	return (chaine);
+		i += putstr_len(convert_pourcent(flag));
+	
+	return (i);
 }

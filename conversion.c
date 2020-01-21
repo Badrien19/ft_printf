@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:37:33 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/16 13:42:12 by badrien          ###   ########.fr       */
+/*   Updated: 2019/12/17 10:09:42 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char *convert_p(va_list ap, t_flag flag) // OK
 	return (s);
 }
 
-char *convert_di(va_list ap, t_flag flag) // SEEMS ok (attention quand la precision et le nombre valent 0, valable pour diuxx)
+char *convert_di(va_list ap, t_flag flag)
 {
 	int i;
 	char *s;
@@ -82,8 +82,7 @@ char *convert_di(va_list ap, t_flag flag) // SEEMS ok (attention quand la precis
 	i = va_arg(ap, int);
 	s = get_int(i);
 	
-	(i < 0) ? (i = 1) : (i = 0);
-	if(flag.precison != -1 && flag.precison > (int)ft_strlen(s) - i)
+	if(flag.precison != -1 && flag.precison > (int)ft_strlen(s))
 		s = add_zero_front(s, flag.precison);
 	if(flag.precison == 0 && s[0] == '0')
 		{
@@ -99,7 +98,8 @@ char *convert_di(va_list ap, t_flag flag) // SEEMS ok (attention quand la precis
 		s= add_space_before(s, flag.before, ' ');
 	if(flag.after > (int)ft_strlen(s) && flag.after != -1)
 		s= add_space_back(s, flag.after, ' ');
-
+	
+	//printf("<Fin de convert_di: %s>\n", s);
 	return (s);
 }
 

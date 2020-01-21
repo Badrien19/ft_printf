@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 11:23:26 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/16 13:36:56 by badrien          ###   ########.fr       */
+/*   Updated: 2019/12/17 10:10:16 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ typedef struct	s_list
 }				t_flag;
 // ft_printf
 int		ft_printf(const char *template, ...);
-char	*get_text(const char *next);
-char	*get_conversion(va_list ap, char *chaine, t_flag flag);
+int		get_text(const char *next);
+int		get_conversion(va_list ap, t_flag flag);
+int		putstr_len(char *s);
 
 // conversion.c
 char 	*convert_c(va_list ap, t_flag flag);
