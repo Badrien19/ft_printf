@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 11:23:28 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/17 10:10:03 by badrien          ###   ########.fr       */
+/*   Updated: 2020/01/27 15:11:28 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,12 @@
 **  X: unsigned int converti en un chiffrehexadecimal non signe (ABCDEF)
 **  %: un caractere '%' est ecrit
 **  
-**  flag -0.* + chiffre  attention *.*
-**  - ajout espace apres
-**  0 ou chiffre avant ou les deux remplis d'espace ou zero si 0
-**  . precision
-**  * remplace un nombre
-**
-**
-** TO DO: 
-** mise en place d'une struc flag 											OK
-** focntion qui imitialise les flags a 0 								OK
-** fonction qui remplie les flag 												OK
-** verification des potentiel frag											MB
-** AJOUTER la dectection flag 0!												
-** Utiliser mon ft_atoi et non atoi tout court
-** faire un par un ajouter les convertion avec flags
-** 	c:ok	s:ok	p:	d:	i:	u:	x:	X:	%:
+**	Bug random avec u X x avec 0 en argument
+** 	Bug random avec multiple %p
+** 
+** refaire precision pointeur
+** si chaine % seul
+** \0 en c
 */
 
 int	ft_printf(const char *template, ...)
@@ -65,6 +55,12 @@ int	ft_printf(const char *template, ...)
 		{
 			flag = reset_flag(flag);
 			flag = make_flag(&template[i], ap, flag);
+			
+			if(flag.type == '\0')
+				return (0);
+			//printf("flag.after = %d, flag.before = %d, flag.error = %d, flag.precison = %d, flag.type = %d, flag.zero = %d\n);", flag.after, flag.before, flag.error, flag.precison, flag.type, flag.zero);
+
+
 			taille += get_conversion(ap, flag);
 			while (is_conversion(template[++i]) == 0);
 			i++;

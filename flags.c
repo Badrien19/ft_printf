@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:23:29 by badrien           #+#    #+#             */
-/*   Updated: 2020/01/06 09:51:54 by badrien          ###   ########.fr       */
+/*   Updated: 2020/01/27 13:39:12 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,10 @@ int is_conversion(char c)
 	int i;
 
 	i = 0;
+	if(c == '\0')
+		return (1);
 	ft_memcpy(conversion, "cspdiuxX%\0", 9);
-	while(conversion[i])
+	while(conversion[i] != '\0')
 	{
 		if(c == conversion[i])
 			return (1);

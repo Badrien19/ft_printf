@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 13:48:59 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/17 09:36:23 by badrien          ###   ########.fr       */
+/*   Updated: 2020/01/27 13:34:00 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int main()
 	va_list ap;
 	
 	//printf("<%s>\n", get_adress(oui));
-	ft_printf("Mon  printf %d\n", 17); // - nb flag 0
-	printf("Vrai printf %d\n", 17); // nb -nb 0 .
+	ft_printf("%"); // - nb flag 0
+	//printf("%"); // nb -nb 0 .
 	/*
 	flag = reset_flag(flag);
 	flag = make_flag(oui, ap, flag);

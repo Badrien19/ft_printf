@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 09:37:39 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/16 18:48:19 by badrien          ###   ########.fr       */
+/*   Updated: 2020/01/29 16:37:47 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,40 +86,20 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-char *get_adress(unsigned long long pt)
+char *get_adress(unsigned long long pt) // refaire
 {
-	unsigned long long nbr;
 	char *s;
-	char hexa[17];
-	int i;
 
-	i = 0;
-	nbr = pt;
-	while (nbr != 0)
-	{
-		nbr = nbr / 16;
-		i++;
-	}
-	s = malloc(sizeof(char) * (i+3));
-	ft_memcpy(hexa, "0123456789abcdef\0", 17);
-	s[i--] = '\0';
-	s[0] = '0';
-	s[1] = 'x';
-	nbr = pt;
-	if(nbr == 0)
-		s[2] = '0';
-	while(nbr != 0)
-	{
-		s[i+2] = hexa[(nbr % 16)];
-		nbr = nbr / 16;
-		i--;
-	}
+	s = get_hexa(pt, 1);
+	
+	s = ft_strjoin("0x",s);
+	
 	return(s);
 }
 
-char *get_hexa(int nbr, int i)
+char *get_hexa(unsigned long long nbr, int i)
 {
-	unsigned int nbr_cpy;
+	unsigned long long nbr_cpy;
 	char *s;
 	char hexa[17];
 
@@ -133,6 +113,8 @@ char *get_hexa(int nbr, int i)
 		nbr_cpy = nbr_cpy / 16;
 		i++;
 	}
+	if(nbr == 0)
+		i = 1;
 	s = malloc(sizeof(char) * (i + 1));
 	s[i--] = '\0';
 	if(nbr_cpy == 0)
@@ -160,8 +142,8 @@ char *get_unsigned_int(unsigned int nb)
 		n = n / 10;
 		i++;
 	}
-	if(nb == 0)
-		i = -1;
+	//if(nb == 0)
+	//	i = -1;
 	if (!(number = malloc(sizeof(char) * i + 2)))
 		return (0);
 	number[i + 1] = '\0';
