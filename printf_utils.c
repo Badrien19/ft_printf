@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 13:33:26 by badrien           #+#    #+#             */
-/*   Updated: 2019/12/17 10:09:52 by badrien          ###   ########.fr       */
+/*   Updated: 2020/02/03 16:13:56 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*ft_strjoin(char *s1, char *s2)
 {
 	unsigned int	i;
 	char			*ret;
+
 	if (s2 == NULL)
 		return (NULL);
 	i = ft_strlen((char *)s1);
@@ -31,22 +32,23 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (ret);
 }
 
-int putstr_len(char *s)
+int		putstr_len(char *s)
 {
 	int i;
 
 	i = 0;
-	while(s[i] != '\0')
+	while (s[i] != '\0')
 		i++;
 	write(1, s, i);
-	free (s);
+	free(s);
 	return (i);
 }
 
 size_t	ft_strlen(const char *chaine)
 {
 	size_t i;
-	if(chaine ==  NULL)
+
+	if (chaine == NULL)
 		return (0);
 	i = 0;
 	while (chaine[i] != '\0')

@@ -6,13 +6,13 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:23:29 by badrien           #+#    #+#             */
-/*   Updated: 2020/01/27 13:39:12 by badrien          ###   ########.fr       */
+/*   Updated: 2020/02/03 16:39:24 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-t_flag reset_flag(t_flag flag)
+t_flag	reset_flag(t_flag flag)
 {
 	flag.type = '\0';
 	flag.precison = -1;
@@ -23,79 +23,82 @@ t_flag reset_flag(t_flag flag)
 	return (flag);
 }
 
-t_flag make_flag(const char *str, va_list ap, t_flag flag) //%d %.1d %1d %-d
+t_flag	make_flag(const char *str, va_list ap, t_flag flag)
 {
 	int i;
 	int tmp;
 
 	i = 1;
-	while (is_conversion(str[i]) == 0) // si va_arg est negatif mettre en positif
-	{	
-		if(str[i] == '0') //%01d
+	while (is_conversion(str[i]) == 0)
+	{
+		if (str[i] == '0')
 		{
-			flag.zero = atoi(&str[i]); // FT
-			while(str[i] >= '0' && str[i] <= '9')
+			flag.zero = atoi(&str[i]);
+			while (str[i] >= '0' && str[i] <= '9')
 				i++;
 		}
-		else if(str[i] >= '1' && str[i] <= '9') //%1d
+		else if (str[i] >= '1' && str[i] <= '9')
 		{
-			flag.before = atoi(&str[i]); // FT
-			while(str[i] >= '0' && str[i] <= '9')
+			flag.before = atoi(&str[i]);
+			while (str[i] >= '0' && str[i] <= '9')
 				i++;
 		}
-		else if(str[i] == '*' && flag.precison != 0)
+		else if (str[i] == '*' && flag.precison != 0)
 		{
 			tmp = va_arg(ap, int);
-			(tmp >= 0) ? (flag.before = tmp) : (flag.after = tmp * -1);
+			if (tmp >= 0)
+				flag.before = tmp;
+			else
+				flag.after = tmp * -1;
 			i++;
 		}
-		else if(str[i] == '.') // %.1d
+		else if (str[i] == '.')
 		{
 			i++;
-			if(str[i] == '*')
-				{
-					tmp = va_arg(ap, int);
-					(tmp >= 0) ? (flag.precison = tmp) : (flag.precison = -1);
-				}
+			if (str[i] == '*')
+			{
+				tmp = va_arg(ap, int);
+				flag.precison = (tmp >= 0) ? (tmp) : (-1);
+			}
 			else
-				flag.precison = atoi(&str[i]); //FT
-			while((str[i] >= '0' && str[i] <= '9') || str[i] == '*')
+				flag.precison = atoi(&str[i]);
+			while ((str[i] >= '0' && str[i] <= '9') || str[i] == '*')
 				i++;
 		}
-		else if(str[i] == '-') // %-1d
+		else if (str[i] == '-')
 		{
 			i++;
-			if(str[i] == '*')
-				{	
-					tmp = va_arg(ap, int);
-					(tmp >= 0) ? (flag.after = tmp) : (flag.after = -1);
-				}
+			if (str[i] == '*')
+			{
+				tmp = va_arg(ap, int);
+				flag.after = (tmp >= 0) ? (tmp) : (-1);
+			}
 			else
-				flag.after = atoi(&str[i]); //FT
-			while((str[i] >= '0' && str[i] <= '9') || str[i] == '*')
+				flag.after = atoi(&str[i]);
+			while ((str[i] >= '0' && str[i] <= '9') || str[i] == '*')
 				i++;
 		}
-		else if(str[i] == '\0')
+		else if (str[i] == '\0')
 			flag.error = 1;
 		else
 			i++;
 	}
 	flag.type = str[i];
-	return(flag);
+	return (flag);
 }
 
-int is_conversion(char c)
+int		is_conversion(char c)
 {
-	char conversion[10];
-	int i;
+	char	conversion[10];
+	int		i;
 
 	i = 0;
-	if(c == '\0')
+	if (c == '\0')
 		return (1);
 	ft_memcpy(conversion, "cspdiuxX%\0", 9);
-	while(conversion[i] != '\0')
+	while (conversion[i] != '\0')
 	{
-		if(c == conversion[i])
+		if (c == conversion[i])
 			return (1);
 		i++;
 	}

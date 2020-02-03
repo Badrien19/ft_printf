@@ -6,11 +6,12 @@
 #    By: badrien <badrien@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/28 11:23:25 by badrien           #+#    #+#              #
-#    Updated: 2019/11/28 20:16:40 by badrien          ###   ########.fr        #
+#    Updated: 2020/02/03 15:31:46 by badrien          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = ft_printf.c printf_utils.c conversion.c conversion_utils.c flags.c
+SRCS =	ft_printf.c printf_utils.c conversion_1.c conversion_2.c flags.c \
+		conversion_utils_1.c conversion_utils_2.c conversion_utils_3.c
 
 OBJS = ${SRCS:.c=.o}
 
