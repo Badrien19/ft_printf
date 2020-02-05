@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 11:23:26 by badrien           #+#    #+#             */
-/*   Updated: 2020/02/03 16:21:42 by badrien          ###   ########.fr       */
+/*   Updated: 2020/02/05 14:25:53 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct	s_list
 */
 
 int				ft_printf(const char *template, ...);
-int				get_text(const char *next);
 int				get_conversion(va_list ap, t_flag flag);
 int				putstr_len(char *s);
 
@@ -75,13 +74,14 @@ size_t			ft_strlen(const char *chaine);
 char			*ft_strjoin(char *s1, char *s2);
 char			*ft_strjoin_size(char *s1, int size1, char *s2, int size2);
 void			*ft_memccpy(void *dest, const void *src, int c, size_t n);
+int				ft_atoi(const char *str);
 
 /*
 ** flags.c
 */
 
 t_flag			reset_flag(t_flag flag);
-t_flag			make_flag(const char *str, va_list ap, t_flag flag);
+t_flag			make_flag(const char *str, va_list ap, t_flag flag, int i);
 int				is_conversion(char c);
 
 #endif

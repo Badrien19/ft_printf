@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:23:29 by badrien           #+#    #+#             */
-/*   Updated: 2020/02/03 16:39:24 by badrien          ###   ########.fr       */
+/*   Updated: 2020/02/05 14:21:52 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,44 @@ t_flag	reset_flag(t_flag flag)
 	return (flag);
 }
 
-t_flag	make_flag(const char *str, va_list ap, t_flag flag)
+int		flag_dot_minus(int *i, const char *str, va_list ap)
 {
-	int i;
+	int ret;
 	int tmp;
 
-	i = 1;
-	while (is_conversion(str[i]) == 0)
+	(*i)++;
+	if (str[*i] == '*')
 	{
+		tmp = va_arg(ap, int);
+		ret = (tmp >= 0) ? (tmp) : (-1);
+	}
+	else
+		ret = ft_atoi(&str[*i]);
+	while ((str[*i] >= '0' && str[*i] <= '9') || str[*i] == '*')
+		(*i)++;
+	return (ret);
+}
+
+int		flag_zero_number(int *i, const char *str)
+{
+	int ret;
+
+	ret = ft_atoi(&str[*i]);
+	while (str[*i] >= '0' && str[*i] <= '9')
+		(*i)++;
+	return (ret);
+}
+
+t_flag	make_flag(const char *str, va_list ap, t_flag flag, int i)
+{
+	int tmp;
+
+	flag = reset_flag(flag);
+	while (is_conversion(str[i]) == 0)
 		if (str[i] == '0')
-		{
-			flag.zero = atoi(&str[i]);
-			while (str[i] >= '0' && str[i] <= '9')
-				i++;
-		}
+			flag.zero = flag_zero_number(&i, str);
 		else if (str[i] >= '1' && str[i] <= '9')
-		{
-			flag.before = atoi(&str[i]);
-			while (str[i] >= '0' && str[i] <= '9')
-				i++;
-		}
+			flag.before = flag_zero_number(&i, str);
 		else if (str[i] == '*' && flag.precison != 0)
 		{
 			tmp = va_arg(ap, int);
@@ -53,36 +71,11 @@ t_flag	make_flag(const char *str, va_list ap, t_flag flag)
 			i++;
 		}
 		else if (str[i] == '.')
-		{
-			i++;
-			if (str[i] == '*')
-			{
-				tmp = va_arg(ap, int);
-				flag.precison = (tmp >= 0) ? (tmp) : (-1);
-			}
-			else
-				flag.precison = atoi(&str[i]);
-			while ((str[i] >= '0' && str[i] <= '9') || str[i] == '*')
-				i++;
-		}
+			flag.precison = flag_dot_minus(&i, str, ap);
 		else if (str[i] == '-')
-		{
-			i++;
-			if (str[i] == '*')
-			{
-				tmp = va_arg(ap, int);
-				flag.after = (tmp >= 0) ? (tmp) : (-1);
-			}
-			else
-				flag.after = atoi(&str[i]);
-			while ((str[i] >= '0' && str[i] <= '9') || str[i] == '*')
-				i++;
-		}
-		else if (str[i] == '\0')
-			flag.error = 1;
+			flag.after = flag_dot_minus(&i, str, ap);
 		else
 			i++;
-	}
 	flag.type = str[i];
 	return (flag);
 }

@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:03 by badrien           #+#    #+#             */
-/*   Updated: 2020/02/03 15:53:00 by badrien          ###   ########.fr       */
+/*   Updated: 2020/02/05 15:40:36 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*convert_xx(va_list ap, int o, t_flag flag)
 {
 	char			*s;
 	unsigned int	i;
-	char			*new;
 
 	i = va_arg(ap, unsigned int);
 	s = get_hexa(i, o);
@@ -24,12 +23,7 @@ char	*convert_xx(va_list ap, int o, t_flag flag)
 	if (flag.precison != -1 && flag.precison > (int)ft_strlen(s) - (int)i)
 		s = add_zero_front(s, flag.precison);
 	if (flag.precison == 0 && s[0] == '0')
-	{
-		if (!(new = malloc(sizeof(char) * 1)))
-			return (0);
-		new[0] = '\0';
-		s = new;
-	}
+		s = ft_strndup("\0", 1);
 	if (flag.zero != -1 && flag.zero > (int)ft_strlen(s) && flag.precison == -1)
 		s = add_zero_front_zero(s, flag.zero);
 	if (flag.zero != -1 && flag.zero > (int)ft_strlen(s) && flag.precison != -1)
@@ -38,6 +32,8 @@ char	*convert_xx(va_list ap, int o, t_flag flag)
 		s = add_space_before(s, flag.before, ' ');
 	if (flag.after > (int)ft_strlen(s) && flag.after != -1)
 		s = add_space_back(s, flag.after, ' ');
+	if (s == NULL)
+		flag.error = 1;
 	return (s);
 }
 
@@ -46,7 +42,10 @@ char	*convert_pourcent(t_flag flag)
 	char	*c;
 
 	if (!(c = malloc(sizeof(2) * 2)))
-		return (0);
+		{
+			flag.error = 1;
+			return (0);
+		}
 	c[0] = '%';
 	c[1] = '\0';
 	if (flag.after > (int)ft_strlen(c) && flag.after != -1)

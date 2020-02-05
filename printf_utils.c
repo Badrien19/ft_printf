@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 13:33:26 by badrien           #+#    #+#             */
-/*   Updated: 2020/02/03 16:13:56 by badrien          ###   ########.fr       */
+/*   Updated: 2020/02/05 16:16:56 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int		putstr_len(char *s)
 	int i;
 
 	i = 0;
+	if (s == NULL)
+		return(0);
 	while (s[i] != '\0')
 		i++;
 	write(1, s, i);
@@ -54,4 +56,33 @@ size_t	ft_strlen(const char *chaine)
 	while (chaine[i] != '\0')
 		i++;
 	return (i);
+}
+
+int		ft_atoi(const char *str)
+{
+	int						i;
+	int						signe;
+	unsigned long long int	value;
+	unsigned long long int	max;
+
+	i = 0;
+	value = 0;
+	signe = 1;
+	max = 9223372036854775807;
+	while (str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
+	|| str[i] == '\f' || str[i] == '\r' || str[i] == ' ')
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+		signe = (str[i++] == '-') ? -1 : 1;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		value = value * 10;
+		value = value + str[i] - '0';
+		i++;
+		if (value > max && signe == 1)
+			return (-1);
+		if (value > max + 1 && signe == -1)
+			return (0);
+	}
+	return ((int)(value * signe));
 }

@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:27:04 by badrien           #+#    #+#             */
-/*   Updated: 2020/02/03 16:07:35 by badrien          ###   ########.fr       */
+/*   Updated: 2020/02/05 12:51:15 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,8 @@ char	*get_adress(unsigned long long pt)
 	i = 0;
 	nbr_cpy = pt;
 	ft_memcpy(hexa, "0123456789abcdef\0", 17);
-	while (nbr_cpy != 0)
-	{
+	while (nbr_cpy != 0 && i++ != -1)
 		nbr_cpy = nbr_cpy / 16;
-		i++;
-	}
 	if (pt == 0)
 		i = 1;
 	if (!(s = malloc(sizeof(char) * (i + 1))))
@@ -37,9 +34,8 @@ char	*get_adress(unsigned long long pt)
 	nbr_cpy = pt;
 	while (nbr_cpy != 0)
 	{
-		s[i] = hexa[(nbr_cpy % 16)];
+		s[i--] = hexa[(nbr_cpy % 16)];
 		nbr_cpy = nbr_cpy / 16;
-		i--;
 	}
 	return (s);
 }
@@ -55,11 +51,8 @@ char	*get_hexa(unsigned int nbr, int i)
 	if (i == 0)
 		ft_memcpy(hexa, "0123456789ABCDEF\0", 17);
 	i = 0;
-	while (nbr_cpy != 0)
-	{
+	while (nbr_cpy != 0 && i++ != -1)
 		nbr_cpy = nbr_cpy / 16;
-		i++;
-	}
 	if (nbr == 0)
 		i = 1;
 	if (!(s = malloc(sizeof(char) * (i + 1))))
@@ -70,9 +63,8 @@ char	*get_hexa(unsigned int nbr, int i)
 	nbr_cpy = nbr;
 	while (nbr_cpy != 0)
 	{
-		s[i] = hexa[(nbr_cpy % 16)];
+		s[i--] = hexa[(nbr_cpy % 16)];
 		nbr_cpy = nbr_cpy / 16;
-		i--;
 	}
 	return (s);
 }

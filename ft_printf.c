@@ -6,13 +6,29 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 11:23:28 by badrien           #+#    #+#             */
-/*   Updated: 2020/02/03 15:12:18 by badrien          ###   ########.fr       */
+/*   Updated: 2020/02/05 15:25:38 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-int		ft_printf(const char *template, ...)
+static int		get_text(const char *next, int *cpy_i)
+{
+	int i;
+
+	i = 0;
+	while (next[i] != '%' && next[i] != '\0')
+		i++;
+	write(1, next, i);
+	*cpy_i = *cpy_i + i;
+	return (i);
+}
+
+/*
+** REMONTER TOUS LES MALLOCS avec flag.error
+*/
+
+int				ft_printf(const char *template, ...)
 {
 	va_list		ap;
 	t_flag		flag;
@@ -23,40 +39,22 @@ int		ft_printf(const char *template, ...)
 	i = 0;
 	va_start(ap, template);
 	while (template[i] != '\0')
-	{
 		if (template[i] != '%')
+			taille += get_text(&template[i], &i);
+		else if (template[i] == '%')
 		{
-			taille += get_text(&template[i]);
-			while (template[i] != '%' && template[i] != '\0')
-				i++;
-		}
-		if (template[i] == '%')
-		{
-			flag = reset_flag(flag);
-			flag = make_flag(&template[i++], ap, flag);
-			if (flag.type == '\0')
-				return (0);
+			flag = make_flag(&template[i++], ap, flag, 1);
 			taille += get_conversion(ap, flag);
+			if (flag.type == '\0' || flag.error != -1)
+				return (-1);
 			while (is_conversion(template[i]) == 0)
 				i++;
 			i++;
 		}
-	}
 	return (taille);
 }
 
-int		get_text(const char *next)
-{
-	int i;
-
-	i = 0;
-	while (next[i] != '%' && next[i] != '\0')
-		i++;
-	write(1, next, i);
-	return (i);
-}
-
-int		get_conversion(va_list ap, t_flag flag)
+int				get_conversion(va_list ap, t_flag flag)
 {
 	int i;
 
