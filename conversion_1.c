@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:37:33 by badrien           #+#    #+#             */
-/*   Updated: 2020/02/05 16:13:50 by badrien          ###   ########.fr       */
+/*   Updated: 2020/02/06 16:43:24 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*convert_s(va_list ap, t_flag flag)
 	else
 		s = ft_strndup(temp, ft_strlen(temp));
 	if (flag.precison < (int)ft_strlen(s) && flag.precison != -1)
-		s = ft_strndup(s, flag.precison);
+		s = ft_strndup_free(s, flag.precison);
 	if (flag.zero != -1 && flag.zero > (int)ft_strlen(s) && flag.precison == -1)
 		s = add_zero_front_zero(s, flag.zero);
 	if (flag.after > (int)ft_strlen(s) && flag.after != -1)
@@ -70,8 +70,11 @@ char	*convert_p(va_list ap, t_flag flag)
 	if (flag.precison > (int)ft_strlen(s) && flag.precison != -1)
 		s = add_zero_front(s, flag.precison);
 	if (flag.precison == 0 && s[0] == '0')
-		s = ft_strndup("\0", 1);
-	s = ft_strjoin("0x", s);
+		{
+			free(s);
+			s = ft_strndup("\0", 1);
+		}
+	s = ft_strjoin("0x", s); // free
 	if (flag.after > (int)ft_strlen(s) && flag.after != -1)
 		s = add_space_back(s, flag.after, ' ');
 	if (flag.before > (int)ft_strlen(s) && flag.before != -1)
@@ -91,7 +94,10 @@ char	*convert_di(va_list ap, t_flag flag)
 	if (flag.precison != -1 && flag.precison > (int)ft_strlen(s) - 1)
 		s = add_zero_front(s, flag.precison);
 	if (flag.precison == 0 && s[0] == '0')
-		s = ft_strndup("\0", 1);
+		{
+			free(s);
+			s = ft_strndup("\0", 1);
+		}
 	if (flag.zero != -1 && flag.zero > (int)ft_strlen(s) && flag.precison == -1)
 		s = add_zero_front_zero(s, flag.zero);
 	if (flag.zero != -1 && flag.zero > (int)ft_strlen(s) && flag.precison != -1)
@@ -115,7 +121,10 @@ char	*convert_u(va_list ap, t_flag flag)
 	if (flag.precison != -1 && flag.precison > (int)ft_strlen(s))
 		s = add_zero_front(s, flag.precison);
 	if (flag.precison == 0 && s[0] == '0')
-		s = ft_strndup("\0", 1);
+		{
+			free(s);
+			s = ft_strndup("\0", 1);
+		}
 	if (flag.zero != -1 && flag.zero > (int)ft_strlen(s) && flag.precison == -1)
 		s = add_zero_front_zero(s, flag.zero);
 	if (flag.zero != -1 && flag.zero > (int)ft_strlen(s) && flag.precison != -1)

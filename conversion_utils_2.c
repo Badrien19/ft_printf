@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:21:18 by badrien           #+#    #+#             */
-/*   Updated: 2020/02/05 16:13:53 by badrien          ###   ########.fr       */
+/*   Updated: 2020/02/06 16:30:00 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	*add_space_back(char *s, int size, char c)
 		i++;
 	}
 	new[i] = '\0';
+	free(s);
 	return (new);
 }
 
@@ -81,6 +82,7 @@ char	*add_space_before(char *s, int size, char c)
 		i++;
 	}
 	new[i] = '\0';
+	free(s);
 	return (new);
 }
 
@@ -94,7 +96,7 @@ char	*add_zero_front(char *s, int size)
 	if (size < 0)
 		return (NULL);
 	signe = s[i] == '-' ? (1) : (0);
-	if (!(new = malloc(sizeof(char) * size + signe)))
+	if (!(new = malloc(sizeof(char) * (size + signe + 1))))
 		return (0);
 	while (s[i] != '\0')
 		i++;
@@ -109,6 +111,7 @@ char	*add_zero_front(char *s, int size)
 		new[size-- - 1 + signe] = '0';
 	if (s[0] == '-')
 		new[0] = '-';
+	free(s);
 	return (new);
 }
 
@@ -138,5 +141,6 @@ char	*add_zero_front_zero(char *s, int size)
 	}
 	if (s[0] == '-')
 		new[0] = '-';
+	free(s);
 	return (new);
 }

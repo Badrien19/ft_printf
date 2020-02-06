@@ -6,7 +6,7 @@
 #    By: badrien <badrien@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/28 11:23:25 by badrien           #+#    #+#              #
-#    Updated: 2020/02/03 15:31:46 by badrien          ###   ########.fr        #
+#    Updated: 2020/02/06 16:26:52 by badrien          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIB = ar rc
 
 RM = rm -rf
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
 
 all:	${NAME}
 

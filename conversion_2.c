@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:03 by badrien           #+#    #+#             */
-/*   Updated: 2020/02/05 15:40:36 by badrien          ###   ########.fr       */
+/*   Updated: 2020/02/06 15:59:23 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ char	*convert_xx(va_list ap, int o, t_flag flag)
 	if (flag.precison != -1 && flag.precison > (int)ft_strlen(s) - (int)i)
 		s = add_zero_front(s, flag.precison);
 	if (flag.precison == 0 && s[0] == '0')
-		s = ft_strndup("\0", 1);
+		{
+			free(s);
+			s = ft_strndup("\0", 1);
+		}
 	if (flag.zero != -1 && flag.zero > (int)ft_strlen(s) && flag.precison == -1)
 		s = add_zero_front_zero(s, flag.zero);
 	if (flag.zero != -1 && flag.zero > (int)ft_strlen(s) && flag.precison != -1)

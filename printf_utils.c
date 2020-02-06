@@ -6,7 +6,7 @@
 /*   By: badrien <badrien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 13:33:26 by badrien           #+#    #+#             */
-/*   Updated: 2020/02/05 16:16:56 by badrien          ###   ########.fr       */
+/*   Updated: 2020/02/06 15:32:50 by badrien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		ft_memcpy(ret, s1, i);
 		ft_memcpy(&ret[i], s2, ft_strlen((char*)s2) + 1);
 	}
+	free(s2);
 	return (ret);
 }
 
